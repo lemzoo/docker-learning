@@ -1,0 +1,36 @@
+version: "3"
+services:
+  redis:
+    image: redis
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: 0.01
+          memory: 50M
+  db:
+    image: postgres:9.4
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node1
+          - node.role == manager
+  vote:
+    image: voting-app
+    deploy:
+      replicas: 2
+    ports:
+      - 5000:80
+  result:
+    image: result-app
+    deploy:
+      replicas: 1
+    ports:
+      - 5001:80
+  worker:
+    image: worker
+    deploy:
+      replicas: 1
+
+# To deploy stack: docker stack deploy --name=stack-name --compose-file=docker-compose-stack.yml

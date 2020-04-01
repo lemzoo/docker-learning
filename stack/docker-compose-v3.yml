@@ -1,0 +1,12 @@
+version: "3"
+services:
+  web:
+    image: "mmumshad/simple-web-app"
+  database:
+    image: "mongodb"
+  messaging:
+    image: "redis:alpine"
+  orchestration:
+    image: "ansible"
+
+# docker stack deploy
